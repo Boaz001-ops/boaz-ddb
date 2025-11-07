@@ -1,33 +1,35 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
-
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.static(path.join(__dirname))); // Serves all HTML, CSS, JS files
-app.use(bodyParser.json());
-
-// Signup route
-app.post("/signup", (req, res) => {
-  const { username, password } = req.body;
-  console.log("New signup:", username, password);
-  res.send("Signup received successfully!");
-});
+app.use(express.json());
+app.use(express.static(__dirname)); // serve HTML files directly
 
 // Login route
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   console.log("Login attempt:", username, password);
-  res.send("Login successful!");
+
+  // Example check (you can replace this with real validation)
+  if (username === "admin" && password === "1234") {
+    return res.send("✅ Login successful!");
+  } else {
+    return res.send("❌ Invalid username or password.");
+  }
 });
 
-// Serve index.html as the main page
+// Signup route
+app.post("/signup", (req, res) => {
+  const { username, password } = req.body;
+  console.log("Signup data:", username, password);
+  res.send("✅ Signup successful (dummy response)");
+});
+
+// Always serve index.html for root
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+// Start the server
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

@@ -62,18 +62,32 @@
 <body>
   <h2 style="text-align:center; color:blue;">Log In</h2>
 
-  <form id="loginForm">
-    <label>Phone Number:</label>
-    <input type="text" id="phone" placeholder="07XXXXXXXX" required><br><br>
+  <h2>Login</h2>
+<form id="loginForm">
+  <input type="text" id="username" placeholder="Username" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button type="submit">Login</button>
+</form>
 
-    <label>Password:</label>
-    <input type="password" id="password" required><br><br>
+<p id="message"></p>
 
-    <button type="submit">Log In</button>
-    <br><br>
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    <a href="forgot-password.html">Forgot Password?</a>
-  </form>
+  const response = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const message = await response.text();
+  document.getElementById("message").textContent = message;
+});
+</script>
+
 
   <p>Need help? <b style="color: rgb(4, 232, 92);">Contact: 0769056481</b></p>
 
