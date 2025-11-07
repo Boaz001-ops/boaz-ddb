@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,3 +111,117 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Account</title>
+  <style>
+    body {
+      background-image: url("pictures/images.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      color: #222;
+      font-weight: bold;
+      padding: 30px;
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center; color:blue;">Create Account</h2>
+
+  <form id="signupForm">
+    <label>First Name:</label>
+    <input type="text" id="firstName" required><br><br>
+
+    <label>Last Name:</label>
+    <input type="text" id="lastName" required><br><br>
+
+    <label>Phone Number:</label>
+    <input type="text" id="phone" placeholder="07XXXXXXXX" required><br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password" required minlength="6"><br><br>
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword" required><br><br>
+
+    <input type="checkbox" onclick="togglePassword()"> Show Password
+    <br><br>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <script>
+    // Toggle show/hide password
+    function togglePassword() {
+      const pass = document.getElementById("password");
+      const confirm = document.getElementById("confirmPassword");
+      pass.type = pass.type === "password" ? "text" : "password";
+      confirm.type = confirm.type === "password" ? "text" : "password";
+    }
+
+    // Handle signup form submission
+    document.getElementById("signupForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("❌ Passwords do not match!");
+        return;
+      }
+
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, phone, password })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("✅ Account created successfully!");
+        window.location.href = "log-in.html";
+      } else {
+        alert("⚠️ " + data.message);
+      }
+    });
+  </script>
+</body>
+</html>
+>>>>>>> 0cabdbe2b46b56175df393d276558b5a44a9f1d6
