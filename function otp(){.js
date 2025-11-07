@@ -1,6 +1,6 @@
 function otp(){
     const email =document.getElementById('email');
-    cons otpverify = document.getElementByClassName('otpverify')[0]
+    const otpverify = document.getElementByClassName('otpverify')[0]
 
 Email.send({
     SecureToken : "C973D7AD-F097-4B95-91F4-40ABC5567812",
